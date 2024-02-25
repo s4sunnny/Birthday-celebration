@@ -1140,10 +1140,10 @@ body {
 
 #image2-page1 {
     position: absolute;
-    top: -5%;
+    top: 22%;
     height: 51%;
     widows: 10%;
-    margin-left: 85%;
+    margin-left: 80%;
     transform: rotate(-15deg);
 }
 
@@ -1365,11 +1365,13 @@ footer a:hover {
 #heading {
     position: relative;
     padding-top: 13%;
+    top: -33%;
 }
 
 #heading0 {
     position: relative;
     padding-top: 1%;
+    top: -32%;
 }
 
 #heading1 {
@@ -1586,7 +1588,6 @@ footer a:hover {
 * {
     margin: 0;
     padding: 0;
-    text-transform: uppercase;
 }
 
 a {

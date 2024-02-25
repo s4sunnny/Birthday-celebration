@@ -1,44 +1,52 @@
-
 //Replace below Date with the date you meet your love.
-const date = new Date(2000, 4, 24).getTime();
-
+const date = new Date(1994, 6, 11).getTime();
 
 const year = new Date().getFullYear();
 // countdown Timer
-let timer = setInterval(function() {
+let timer = setInterval(function () {
+  // get today's date
+  const today = new Date().getTime();
 
-    // get today's date
-    const today = new Date().getTime();
+  // get the difference
+  const diff = today - date;
 
-    // get the difference
-    const diff = today - date;
+  // math
+  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    // math
-    let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    // display
-    document.getElementById("timer").innerHTML =
-        "<div class=\"days\"> \
-  <div class=\"numbers\">" + days + "</div>days</div> \
-<div class=\"hours\"> \
-  <div class=\"numbers\">" + hours + "</div>hours</div> \
-<div class=\"minutes\"> \
-  <div class=\"numbers\">" + minutes + "</div>minutes</div> \
-<div class=\"seconds\"> \
-  <div class=\"numbers\">" + seconds + "</div>seconds</div> \
+  // display
+  document.getElementById("timer").innerHTML =
+    '<div class="days"> \
+  <div class="numbers">' +
+    days +
+    '</div>days</div> \
+<div class="hours"> \
+  <div class="numbers">' +
+    hours +
+    '</div>hours</div> \
+<div class="minutes"> \
+  <div class="numbers">' +
+    minutes +
+    '</div>minutes</div> \
+<div class="seconds"> \
+  <div class="numbers">' +
+    seconds +
+    "</div>seconds</div> \
 </div>";
-
 }, 1000);
 
 //scrolling
-$(function() {
-    $('a[href*=\\#]').on('click', function(e) {
-        e.preventDefault();
-        $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top }, 500, 'linear');
-    });
+$(function () {
+  $("a[href*=\\#]").on("click", function (e) {
+    e.preventDefault();
+    $("html, body").animate(
+      { scrollTop: $($(this).attr("href")).offset().top },
+      500,
+      "linear"
+    );
+  });
 });
 
 $(".animated").addClass("delay-1s");
@@ -49,16 +57,15 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 // Initialize the GL context
-var gl = canvas.getContext('webgl');
+var gl = canvas.getContext("webgl");
 if (!gl) {
-    console.error("Unable to initialize WebGL.");
+  console.error("Unable to initialize WebGL.");
 }
 
 //Time step
 var dt = 0.015;
 //Time
 var time = 0.0;
-
 
 //Heart..........................
 
@@ -219,44 +226,43 @@ void main(){
 
 //************** Utility functions **************
 
-window.addEventListener('resize', onWindowResize, false);
+window.addEventListener("resize", onWindowResize, false);
 
 function onWindowResize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.uniform1f(widthHandle, window.innerWidth);
-    gl.uniform1f(heightHandle, window.innerHeight);
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  gl.viewport(0, 0, canvas.width, canvas.height);
+  gl.uniform1f(widthHandle, window.innerWidth);
+  gl.uniform1f(heightHandle, window.innerHeight);
 }
-
 
 //Compile shader and combine with source
 function compileShader(shaderSource, shaderType) {
-    var shader = gl.createShader(shaderType);
-    gl.shaderSource(shader, shaderSource);
-    gl.compileShader(shader);
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        throw "Shader compile failed with: " + gl.getShaderInfoLog(shader);
-    }
-    return shader;
+  var shader = gl.createShader(shaderType);
+  gl.shaderSource(shader, shaderSource);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    throw "Shader compile failed with: " + gl.getShaderInfoLog(shader);
+  }
+  return shader;
 }
 
 //From https://codepen.io/jlfwong/pen/GqmroZ
 //Utility to complain loudly if we fail to find the attribute/uniform
 function getAttribLocation(program, name) {
-    var attributeLocation = gl.getAttribLocation(program, name);
-    if (attributeLocation === -1) {
-        throw 'Cannot find attribute ' + name + '.';
-    }
-    return attributeLocation;
+  var attributeLocation = gl.getAttribLocation(program, name);
+  if (attributeLocation === -1) {
+    throw "Cannot find attribute " + name + ".";
+  }
+  return attributeLocation;
 }
 
 function getUniformLocation(program, name) {
-    var attributeLocation = gl.getUniformLocation(program, name);
-    if (attributeLocation === -1) {
-        throw 'Cannot find uniform ' + name + '.';
-    }
-    return attributeLocation;
+  var attributeLocation = gl.getUniformLocation(program, name);
+  if (attributeLocation === -1) {
+    throw "Cannot find uniform " + name + ".";
+  }
+  return attributeLocation;
 }
 
 //************** Create shaders **************
@@ -273,11 +279,16 @@ gl.linkProgram(program);
 
 gl.useProgram(program);
 
-//Set up rectangle covering entire canvas 
-var vertexData = new Float32Array([-1.0, 1.0, // top left
-    -1.0, -1.0, // bottom left
-    1.0, 1.0, // top right
-    1.0, -1.0, // bottom right
+//Set up rectangle covering entire canvas
+var vertexData = new Float32Array([
+  -1.0,
+  1.0, // top left
+  -1.0,
+  -1.0, // bottom left
+  1.0,
+  1.0, // top right
+  1.0,
+  -1.0, // bottom right
 ]);
 
 //Create vertex buffer
@@ -286,368 +297,426 @@ gl.bindBuffer(gl.ARRAY_BUFFER, vertexDataBuffer);
 gl.bufferData(gl.ARRAY_BUFFER, vertexData, gl.STATIC_DRAW);
 
 // Layout of our data in the vertex buffer
-var positionHandle = getAttribLocation(program, 'position');
+var positionHandle = getAttribLocation(program, "position");
 
 gl.enableVertexAttribArray(positionHandle);
-gl.vertexAttribPointer(positionHandle,
-    2, // position is a vec2 (2 values per component)
-    gl.FLOAT, // each component is a float
-    false, // don't normalize values
-    2 * 4, // two 4 byte float components per vertex (32 bit float is 4 bytes)
-    0 // how many bytes inside the buffer to start from
+gl.vertexAttribPointer(
+  positionHandle,
+  2, // position is a vec2 (2 values per component)
+  gl.FLOAT, // each component is a float
+  false, // don't normalize values
+  2 * 4, // two 4 byte float components per vertex (32 bit float is 4 bytes)
+  0 // how many bytes inside the buffer to start from
 );
 
 //Set uniform handle
-var timeHandle = getUniformLocation(program, 'time');
-var widthHandle = getUniformLocation(program, 'width');
-var heightHandle = getUniformLocation(program, 'height');
+var timeHandle = getUniformLocation(program, "time");
+var widthHandle = getUniformLocation(program, "width");
+var heightHandle = getUniformLocation(program, "height");
 
 gl.uniform1f(widthHandle, window.innerWidth);
 gl.uniform1f(heightHandle, window.innerHeight);
 
 function draw() {
-    //Update time
-    time += dt;
+  //Update time
+  time += dt;
 
-    //Send uniforms to program
-    gl.uniform1f(timeHandle, time);
-    //Draw a triangle strip connecting vertices 0-4
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  //Send uniforms to program
+  gl.uniform1f(timeHandle, time);
+  //Draw a triangle strip connecting vertices 0-4
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-    requestAnimationFrame(draw);
+  requestAnimationFrame(draw);
 }
 
 draw();
 
 //Heart
-$("#header-plugin").load("https://vivinantony.github.io/header-plugin/", function() {
-    $("a.back-to-link").attr("href", "http://blog.thelittletechie.com/2015/03/love-heart-animation-using-css3.html#tlt")
-});
+$("#header-plugin").load(
+  "https://vivinantony.github.io/header-plugin/",
+  function () {
+    $("a.back-to-link").attr(
+      "href",
+      "http://blog.thelittletechie.com/2015/03/love-heart-animation-using-css3.html#tlt"
+    );
+  }
+);
 
-var love = setInterval(function() {
-    var r_num = Math.floor(Math.random() * 40) + 1;
-    var r_size = Math.floor(Math.random() * 65) + 10;
-    var r_left = Math.floor(Math.random() * 100) + 1;
-    var r_bg = Math.floor(Math.random() * 25) + 100;
-    var r_time = Math.floor(Math.random() * 5) + 5;
+var love = setInterval(function () {
+  var r_num = Math.floor(Math.random() * 40) + 1;
+  var r_size = Math.floor(Math.random() * 65) + 10;
+  var r_left = Math.floor(Math.random() * 100) + 1;
+  var r_bg = Math.floor(Math.random() * 25) + 100;
+  var r_time = Math.floor(Math.random() * 5) + 5;
 
-    $('.bg_heart').append("<div class='heart' style='width:" + r_size + "px;height:" + r_size + "px;left:" + r_left + "%;background:rgba(255," + (r_bg - 25) + "," + r_bg + ",1);-webkit-animation:love " + r_time + "s ease;-moz-animation:love " + r_time + "s ease;-ms-animation:love " + r_time + "s ease;animation:love " + r_time + "s ease'></div>");
+  $(".bg_heart").append(
+    "<div class='heart' style='width:" +
+      r_size +
+      "px;height:" +
+      r_size +
+      "px;left:" +
+      r_left +
+      "%;background:rgba(255," +
+      (r_bg - 25) +
+      "," +
+      r_bg +
+      ",1);-webkit-animation:love " +
+      r_time +
+      "s ease;-moz-animation:love " +
+      r_time +
+      "s ease;-ms-animation:love " +
+      r_time +
+      "s ease;animation:love " +
+      r_time +
+      "s ease'></div>"
+  );
 
-    $('.bg_heart').append("<div class='heart' style='width:" + (r_size - 10) + "px;height:" + (r_size - 10) + "px;left:" + (r_left + r_num) + "%;background:rgba(255," + (r_bg - 25) + "," + (r_bg + 25) + ",1);-webkit-animation:love " + (r_time + 5) + "s ease;-moz-animation:love " + (r_time + 5) + "s ease;-ms-animation:love " + (r_time + 5) + "s ease;animation:love " + (r_time + 5) + "s ease'></div>");
+  $(".bg_heart").append(
+    "<div class='heart' style='width:" +
+      (r_size - 10) +
+      "px;height:" +
+      (r_size - 10) +
+      "px;left:" +
+      (r_left + r_num) +
+      "%;background:rgba(255," +
+      (r_bg - 25) +
+      "," +
+      (r_bg + 25) +
+      ",1);-webkit-animation:love " +
+      (r_time + 5) +
+      "s ease;-moz-animation:love " +
+      (r_time + 5) +
+      "s ease;-ms-animation:love " +
+      (r_time + 5) +
+      "s ease;animation:love " +
+      (r_time + 5) +
+      "s ease'></div>"
+  );
 
-    $('.heart').each(function() {
-        var top = $(this).css("top").replace(/[^-\d\.]/g, '');
-        var width = $(this).css("width").replace(/[^-\d\.]/g, '');
-        if (top <= -100 || width >= 150) {
-            $(this).detach();
-        }
-    });
+  $(".heart").each(function () {
+    var top = $(this)
+      .css("top")
+      .replace(/[^-\d\.]/g, "");
+    var width = $(this)
+      .css("width")
+      .replace(/[^-\d\.]/g, "");
+    if (top <= -100 || width >= 150) {
+      $(this).detach();
+    }
+  });
 }, 500);
 
+var $header_top = $(".header-top");
+var $nav = $("nav");
 
-var $header_top = $('.header-top');
-var $nav = $('nav');
-
-$header_top.find('a').on('click', function() {
-    $(this).parent().toggleClass('open-menu');
+$header_top.find("a").on("click", function () {
+  $(this).parent().toggleClass("open-menu");
 });
 
-$('#fullpage').fullpage({
-    sectionsColor: ['#3dcfa1', '#348899', '#ff8b20', '#ff5757', '#ffd03c'],
-    sectionSelector: '.vertical-scrolling',
-    navigation: true,
-    slidesNavigation: true,
-    controlArrows: false,
-    anchors: ['firstSection', 'secondSection', 'thirdSection', 'fourthSection', 'fifthSection', 'sixthSection', 'SeventhSection', 'eightSection', 'ninthSection', 'tenthsection', 'eleventhSection'],
-    menu: '#menu',
+$("#fullpage").fullpage({
+  sectionsColor: ["#3dcfa1", "#348899", "#ff8b20", "#ff5757", "#ffd03c"],
+  sectionSelector: ".vertical-scrolling",
+  navigation: true,
+  slidesNavigation: true,
+  controlArrows: false,
+  anchors: [
+    "firstSection",
+    "secondSection",
+    "thirdSection",
+    "fourthSection",
+    "fifthSection",
+    "sixthSection",
+    "SeventhSection",
+    "eightSection",
+    "ninthSection",
+    "tenthsection",
+    "eleventhSection",
+  ],
+  menu: "#menu",
 
-    afterLoad: function(anchorLink, index) {
-        $header_top.css('background', 'rgba(0, 47, 77, .3)');
-        $nav.css('background', 'rgba(0, 47, 77, .25)');
-        if (index == 10) {
-            $('#fp-nav').hide();
-        }
-    },
+  afterLoad: function (anchorLink, index) {
+    $header_top.css("background", "rgba(0, 47, 77, .3)");
+    $nav.css("background", "rgba(0, 47, 77, .25)");
+    if (index == 10) {
+      $("#fp-nav").hide();
+    }
+  },
 
-    onLeave: function(index, nextIndex, direction) {
-        if (index == 10) {
-            $('#fp-nav').show();
-        }
-    },
-
-
+  onLeave: function (index, nextIndex, direction) {
+    if (index == 10) {
+      $("#fp-nav").show();
+    }
+  },
 });
 
 // Section 09
-$("#switch").click(function() {
-    if ($("#fullpage").hasClass("night")) {
-        $("#fullpage").removeClass("night");
-        $("#switch").removeClass("switched");
-    } else {
-        $("#fullpage").addClass("night");
-        $("#switch").addClass("switched");
-
-    }
+$("#switch").click(function () {
+  if ($("#fullpage").hasClass("night")) {
+    $("#fullpage").removeClass("night");
+    $("#switch").removeClass("switched");
+  } else {
+    $("#fullpage").addClass("night");
+    $("#switch").addClass("switched");
+  }
 });
 
 // Section 10
-$(document).ready(function() {
+$(document).ready(function () {
+  var box = $(".box"),
+    orginal = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+    temp = orginal,
+    x = [],
+    sec = 0,
+    date1,
+    date2,
+    moves = 0,
+    mm = 0,
+    ss = 0,
+    upIMG,
+    images = ["/images/section10/image01.png"];
+  img = 0;
 
+  $(".me").css({ "background-image": "url(" + images[0] + ")" });
 
-    var box = $(".box"),
-        orginal = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
-        temp = orginal,
-        x = [],
-        sec = 0,
-        date1, date2,
-        moves = 0,
-        mm = 0,
-        ss = 0,
-        upIMG,
-        images = ["/images/section10/image01.png"]
-    img = 0;
+  $(".start").click(function () {
+    $(".start").delay(100).slideUp(500);
+    $(".reset").show();
+    $(".full").hide();
+    $(".pre_img").addClass("prevent_click");
 
+    date1 = new Date();
+    Start();
+    return 0;
+  });
 
-
-
-    $('.me').css({ "background-image": 'url(' + images[0] + ')' });
-
-    $(".start").click(function() {
-        $(".start").delay(100).slideUp(500);
-        $(".reset").show()
-        $(".full").hide();
-        $(".pre_img").addClass("prevent_click");
-
-        date1 = new Date();
-        Start();
-        return 0;
-    });
-
-    function Start() {
-        randomTile();
-        changeBG(img);
-        var count = 0,
-            a,
-            b,
-            A,
-            B;
-        $(".me").click(function() {
-            count++;
-            if (count == 1) {
-                a = $(this).attr("data-bid");
-                $('.me_' + a).css({ "opacity": ".65" });
-            } else {
-                b = $(this).attr("data-bid");
-                $('.me_' + a).css({ "opacity": "1" });
-                if (a == b) {} else {
-                    $(".me_" + a)
-                        .addClass("me_" + b)
-                        .removeClass("me_" + a);
-                    $(this)
-                        .addClass("me_" + a)
-                        .removeClass("me_" + b);
-                    $(".me_" + a).attr("data-bid", a);
-                    $(".me_" + b).attr("data-bid", b);
-                }
-                moves++;
-                swapping(a, b);
-                checkCorrect(a);
-                checkCorrect(b);
-                a = b = count = A = B = 0;
-            }
-            if (arraysEqual(x)) {
-                date2 = new Date();
-                timeDifferece();
-                showScore();
-                return 0;
-            }
-        });
-        return 0;
-    }
-
-    function randomTile() {
-        var i;
-        for (i = orginal.length - 1; i >= 0; i--) {
-            var flag = getRandom(0, i);
-            x[i] = temp[flag];
-            temp[flag] = temp[i];
-            temp[i] = x[i];
+  function Start() {
+    randomTile();
+    changeBG(img);
+    var count = 0,
+      a,
+      b,
+      A,
+      B;
+    $(".me").click(function () {
+      count++;
+      if (count == 1) {
+        a = $(this).attr("data-bid");
+        $(".me_" + a).css({ opacity: ".65" });
+      } else {
+        b = $(this).attr("data-bid");
+        $(".me_" + a).css({ opacity: "1" });
+        if (a == b) {
+        } else {
+          $(".me_" + a)
+            .addClass("me_" + b)
+            .removeClass("me_" + a);
+          $(this)
+            .addClass("me_" + a)
+            .removeClass("me_" + b);
+          $(".me_" + a).attr("data-bid", a);
+          $(".me_" + b).attr("data-bid", b);
         }
-        for (i = 0; i < orginal.length; i++) {
-            box.append(
-                '<div  class="me me_' + x[i] + ' tile" data-bid="' + x[i] + '"></div>'
-            );
-            if ((i + 1) % 6 == 0) box.append("<br>");
-        }
-        i = 17;
+        moves++;
+        swapping(a, b);
+        checkCorrect(a);
+        checkCorrect(b);
+        a = b = count = A = B = 0;
+      }
+      if (arraysEqual(x)) {
+        date2 = new Date();
+        timeDifferece();
+        showScore();
         return 0;
-    }
-
-    function arraysEqual(arr) {
-        var i;
-        for (i = orginal.length - 1; i >= 0; i--) {
-            if (arr[i] != i) return false;
-        }
-        return true;
-    }
-
-    function checkCorrect(N1) {
-        var pos = x.indexOf(parseInt(N1, 10));
-        if (pos != N1) {
-            return;
-        }
-        $(".me_" + N1).addClass("correct , prevent_click ");
-        return;
-    }
-
-    function swapping(N1, N2) {
-        var first = x.indexOf(parseInt(N1, 10)),
-            second = x.indexOf(parseInt(N2, 10));
-        x[first] = parseInt(N2, 10);
-        x[second] = parseInt(N1, 10);
-        return 0;
-    }
-
-    function getRandom(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    function timeDifferece() {
-        var diff = date2 - date1;
-        var msec = diff;
-        var hh = Math.floor(msec / 1000 / 60 / 60);
-        msec -= hh * 1000 * 60 * 60;
-        mm = Math.floor(msec / 1000 / 60); // Gives Minute
-        msec -= mm * 1000 * 60;
-        ss = Math.floor(msec / 1000); // Gives Second
-        msec -= ss * 1000;
-        return 0;
-    }
-
-
-    function changeBG(img) {
-        if (img != 3) {
-            $('.me').css({
-                "background-image": "url(" + images[img] + ")"
-            });
-            return
-        } else
-            $('.me').css({ "background-image": "url(" + upIMG + ")" });
-    }
-
-    $('.pre_img li').hover(function() {
-        img = $(this).attr("data-bid");
-        changeBG(img);
-
+      }
     });
+    return 0;
+  }
 
-    function showScore() {
-        $('#min').html(mm);
-        $('#sec').html(ss);
-        $('#moves').html(moves);
-        setTimeout(function() {
-            $('.cover').slideDown(350);
-        }, 1050);
-        return 0;
+  function randomTile() {
+    var i;
+    for (i = orginal.length - 1; i >= 0; i--) {
+      var flag = getRandom(0, i);
+      x[i] = temp[flag];
+      temp[flag] = temp[i];
+      temp[i] = x[i];
     }
-
-    $('.OK').click(function() {
-        $('.cover').slideUp(350);
-    });
-
-    $('.reset').click(function() {
-        $(".reset").hide()
-        $(".tile").remove();
-        $("br").remove();
-        $(".full").show();
-        $(".start").show();
-        $(".pre_img").removeClass("prevent_click");
-
-        temp = orginal;
-        x = [];
-        moves = ss = mm = 0;
-        return 0;
-    });
-
-    $("#upfile1").click(function() {
-        $("#file1").trigger('click');
-    });
-
-    $("#file1").change(function() {
-        readURL(this);
-    });
-
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                upIMG = e.target.result;
-                img = 3;
-                changeBG(3);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-
+    for (i = 0; i < orginal.length; i++) {
+      box.append(
+        '<div  class="me me_' + x[i] + ' tile" data-bid="' + x[i] + '"></div>'
+      );
+      if ((i + 1) % 6 == 0) box.append("<br>");
     }
+    i = 17;
+    return 0;
+  }
+
+  function arraysEqual(arr) {
+    var i;
+    for (i = orginal.length - 1; i >= 0; i--) {
+      if (arr[i] != i) return false;
+    }
+    return true;
+  }
+
+  function checkCorrect(N1) {
+    var pos = x.indexOf(parseInt(N1, 10));
+    if (pos != N1) {
+      return;
+    }
+    $(".me_" + N1).addClass("correct , prevent_click ");
+    return;
+  }
+
+  function swapping(N1, N2) {
+    var first = x.indexOf(parseInt(N1, 10)),
+      second = x.indexOf(parseInt(N2, 10));
+    x[first] = parseInt(N2, 10);
+    x[second] = parseInt(N1, 10);
+    return 0;
+  }
+
+  function getRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function timeDifferece() {
+    var diff = date2 - date1;
+    var msec = diff;
+    var hh = Math.floor(msec / 1000 / 60 / 60);
+    msec -= hh * 1000 * 60 * 60;
+    mm = Math.floor(msec / 1000 / 60); // Gives Minute
+    msec -= mm * 1000 * 60;
+    ss = Math.floor(msec / 1000); // Gives Second
+    msec -= ss * 1000;
+    return 0;
+  }
+
+  function changeBG(img) {
+    if (img != 3) {
+      $(".me").css({
+        "background-image": "url(" + images[img] + ")",
+      });
+      return;
+    } else $(".me").css({ "background-image": "url(" + upIMG + ")" });
+  }
+
+  $(".pre_img li").hover(function () {
+    img = $(this).attr("data-bid");
+    changeBG(img);
+  });
+
+  function showScore() {
+    $("#min").html(mm);
+    $("#sec").html(ss);
+    $("#moves").html(moves);
+    setTimeout(function () {
+      $(".cover").slideDown(350);
+    }, 1050);
+    return 0;
+  }
+
+  $(".OK").click(function () {
+    $(".cover").slideUp(350);
+  });
+
+  $(".reset").click(function () {
+    $(".reset").hide();
+    $(".tile").remove();
+    $("br").remove();
+    $(".full").show();
+    $(".start").show();
+    $(".pre_img").removeClass("prevent_click");
+
+    temp = orginal;
+    x = [];
+    moves = ss = mm = 0;
+    return 0;
+  });
+
+  $("#upfile1").click(function () {
+    $("#file1").trigger("click");
+  });
+
+  $("#file1").change(function () {
+    readURL(this);
+  });
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        upIMG = e.target.result;
+        img = 3;
+        changeBG(3);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
 });
 
 //section03
-$(function() {
-    var arrow = $('.chat-head img');
-    var textarea = $('.chat-text textarea');
+$(function () {
+  var arrow = $(".chat-head img");
+  var textarea = $(".chat-text textarea");
 
-    arrow.on('click', function() {
-        var src = arrow.attr('src');
+  arrow.on("click", function () {
+    var src = arrow.attr("src");
 
-        $('.chat-body').slideToggle('fast');
-        if (src == 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png') {
-            arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_up-16.png');
-        } else {
-            arrow.attr('src', 'https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png');
-        }
-    });
+    $(".chat-body").slideToggle("fast");
+    if (
+      src ==
+      "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png"
+    ) {
+      arrow.attr(
+        "src",
+        "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_up-16.png"
+      );
+    } else {
+      arrow.attr(
+        "src",
+        "https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png"
+      );
+    }
+  });
 
-    textarea.keypress(function(event) {
-        var $this = $(this);
+  textarea.keypress(function (event) {
+    var $this = $(this);
 
-        if (event.keyCode == 13) {
-            var msg = $this.val();
-            $this.val('');
-            $('.msg-insert').prepend("<div class='msg-send'>" + msg + "</div>");
-        }
-    });
-
+    if (event.keyCode == 13) {
+      var msg = $this.val();
+      $this.val("");
+      $(".msg-insert").prepend("<div class='msg-send'>" + msg + "</div>");
+    }
+  });
 });
 
 // section 07
 function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-$.fn.randomOrder = function(animate) {
-    this.each(function() {
-        var image = $(this);
+$.fn.randomOrder = function (animate) {
+  this.each(function () {
+    var image = $(this);
 
-        // Viewport Dimensions
-        var vpHeight = $(window).height();
-        var vpWidth = $(window).width();
+    // Viewport Dimensions
+    var vpHeight = $(window).height();
+    var vpWidth = $(window).width();
 
-        // Image Position
-        var xPos = getRandomInt(0, vpWidth - image.width());
-        var yPos = getRandomInt(0, vpHeight - image.height());
-        var zIndex = getRandomInt(0, 12);
+    // Image Position
+    var xPos = getRandomInt(0, vpWidth - image.width());
+    var yPos = getRandomInt(0, vpHeight - image.height());
+    var zIndex = getRandomInt(0, 12);
 
-        // Animation Duration
-        if (animate) var dur = 500;
-        else var dur = 0;
+    // Animation Duration
+    if (animate) var dur = 500;
+    else var dur = 0;
 
-        image.animate({ left: xPos, top: yPos, 'z-index': zIndex }, dur);
-    });
+    image.animate({ left: xPos, top: yPos, "z-index": zIndex }, dur);
+  });
 };
 
-
-
 //Setup
-$('.img07').randomOrder(false);
-$('.img07').draggable({ stack: "img" });
+$(".img07").randomOrder(false);
+$(".img07").draggable({ stack: "img" });
